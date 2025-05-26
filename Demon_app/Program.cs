@@ -2,6 +2,7 @@
 using System.Numerics;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace Demon_app
 {
@@ -11,15 +12,21 @@ namespace Demon_app
         const int PROCESS_VM_READ = 0x0010;
         const int PROCESS_QUERY_INFORMATION = 0x0400;
 
-        // entity list 
-        static List<Entity> EntidadesDaPartida = new List<Entity>();
+        static List<Entity> entities = new List<Entity>();
 
+        
         // importar função da api 
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
         [DllImport("kernel32.dll")]
         public static extern bool CloseHandle(IntPtr hObject);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, int dwSize, out int lpNumberOfBytesRead);
+
+        public static readonly int PositionNormal = 0x7dc;
+        public static readonly int MyPlayer = 0x7C;
 
         static void Main(string[] args)
         {
@@ -34,6 +41,9 @@ namespace Demon_app
             {
                 Console.WriteLine("processo aberto");
                 CloseHandle(handle);
+
+                List<Entity> entities = Read
+                Console.WriteLine("Lendo jogadores");
             }
             else
             {
